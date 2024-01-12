@@ -14,9 +14,7 @@ def main(page):
     def submitMessage(event):
         # Colocando o nome do usuario na mensagem
         value = f"{nameUser.value}: {inputMenssage.value}"
-        chat.controls.append(ft.Text(value))
-
-        page.pubsub.send_all(value)
+        page.pubsub.send_all(value) # Enviando mensagem
         # Limpando o input quando enviar a mensagem
         inputMenssage.value = ""
 
@@ -33,11 +31,11 @@ def main(page):
         lineMessage = ft.Row(
             [inputMenssage, buttonSubmit]
         ) # Campo de escrever mensagem
-        page.add(lineMessage)   # Adicionando na pagina
+        page.add(lineMessage) # Adicionando na pagina
 
         # Criando de texto que informa quando e qual usuario entro no chat
         textName = f"{nameUser.value} Entrou no Chat!"
-        chat.controls.append(ft.Text(textName))
+        page.pubsub.send_all(textName)
         page.update() # Atualizando a pagina
 
     popUp = ft.AlertDialog(
@@ -58,4 +56,7 @@ def main(page):
     page.add(text) # Adicionando titulo na pagina
     page.add(button) # Adicionando botão na pagina
     
+# Rodando em formato de aplicativo
+# ft.app(main) 
+# Rodando no navegador
 ft.app(main, view=ft.WEB_BROWSER) # Chamando função main para rodar a aplicação

@@ -4,11 +4,19 @@ def main(page):
     text = ft.Text("HashZap") # Titulo da pagina
     nameUser = ft.TextField(label="Escreva seu nome") # Input que recebe o nome do usuario
 
+    # Criando conexão com outros usuarios | paginas
+    def sendMessage(informations):
+        chat.controls.append(ft.Text(informations))
+        page.update() # Atualizando a pagina
+
+    page.pubsub.subscribe(sendMessage)
+
     def submitMessage(event):
         # Colocando o nome do usuario na mensagem
         value = f"{nameUser.value}: {inputMenssage.value}"
         chat.controls.append(ft.Text(value))
 
+        page.pubsub.send_all(value)
         # Limpando o input quando enviar a mensagem
         inputMenssage.value = ""
 
@@ -50,4 +58,4 @@ def main(page):
     page.add(text) # Adicionando titulo na pagina
     page.add(button) # Adicionando botão na pagina
     
-ft.app(main)
+ft.app(main, view=ft.WEB_BROWSER) # Chamando função main para rodar a aplicação

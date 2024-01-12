@@ -5,8 +5,13 @@ def main(page):
     nameUser = ft.TextField(label="Escreva seu nome") # Input que recebe o nome do usuario
 
     def submitMessage(event):
-        value = inputMenssage.value
+        # Colocando o nome do usuario na mensagem
+        value = f"{nameUser.value}: {inputMenssage.value}"
         chat.controls.append(ft.Text(value))
+
+        # Limpando o input quando enviar a mensagem
+        inputMenssage.value = ""
+
         page.update()
 
     chat = ft.Column() # Criando chat com estilização em coluna
@@ -22,6 +27,9 @@ def main(page):
         ) # Campo de escrever mensagem
         page.add(lineMessage)   # Adicionando na pagina
 
+        # Criando de texto que informa quando e qual usuario entro no chat
+        textName = f"{nameUser.value} Entrou no Chat!"
+        chat.controls.append(ft.Text(textName))
         page.update() # Atualizando a pagina
 
     popUp = ft.AlertDialog(
